@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portfólio de <%= sobre.nome %>
+    </title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/sobre.js"></script>
+    <script src="/static/js/habilidades.js"></script>
+    <script src="/static/js/certificados.js"></script>
+    <script src="/static/js/projetos.js"></script>
+</head>
+
+<body>
+    <!-- Seção Sobre -->
+    <section id="sobre" class="text-align:center">
+        <img src="<%= sobre.foto %>" alt="Foto de <%= sobre.nome %>" class="perfil">
+        <h1>
+            <%= sobre.nome %>
+        </h1>
+        <h2>
+            <%= sobre.profissao %>
+        </h2>
+        <p id="descricao_style">
+            <%= sobre.descricao %>
+        </p>
+        <p>Email: <a href="mailto:<%= sobre.email %>">
+                <%= sobre.email %>
+            </a></p>
+        <p>
+            <% sobre.redes.forEach(r=> { %>
+                <a href="<%= r.link %>" target="_blank">
+                    <%= r.nome %>
+                </a>
+                <% }); %>
+        </p>
+    </section>
+
+    <!-- Botões de ação: SOBRE -->
+    <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
+        <form action="/form/sobre/editar" method="get" style="display:inline-block; margin: 0 1rem;">
+            <button type="button" onclick="editSobre()">Editar Sobre</button>
+        </form>
+        <div id="formulario-sobre"></div>
+    </div>
+
+    <!-- Formação Acadêmica -->
+    <section id="formacao">
+        <h2>Formação Acadêmica</h2>
+        <p>
+            <%= sobre.formacao %>
+        </p>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="habilidades">
+        <h2>Habilidades</h2>
+        <ul>
+            <% habilidades.forEach(h=> { %>
+                <% const valor=Object.values(h)[0]; %>
+                    <li>
+                        <%= valor %>
+                    </li>
+                    <% }); %>
+        </ul>
+    </section>
+    
+    <!-- Botões de ação: HABILIDADES -->
+    <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
+        <button type="button" onclick="addHab()">Adicionar Habilidade</button>
+        <button type="button" onclick="editHab()">Editar Habilidade</button>
+        <button type="button" onclick="exHab()">Excluir Habilidade</button>
+    </div>
+
+    <div id="formulario-habilidades"></div>
+
+    <!-- Certificados -->
+    <section id="certificados">
+        <h2>Certificados</h2>
+        <ul>
+            <% certificados.forEach(c=> { %>
+                <li>
+                    <a href="<%= c.link %>" target="_blank">
+                        <%= c.nome %>
+                    </a> - <%= c.instituicao %>
+                </li>
+                <% }); %>
+        </ul>
+    </section>
+
+    <!-- Botões de ação: CERTIFICADOS -->
+    <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
+        <button type="button" onclick="addCert()">Adicionar Certificado</button>
+        <button type="button" onclick="editCert()">Editar Certificado</button>
+        <button type="button" onclick="exCert()">Excluir Certificado</button>
+    </div>
+
+    <div id="formulario-certificados"></div>
+
+    <!-- Projetos -->
+    <section id="projetos">
+        <h2>Projetos Desenvolvidos</h2>
+        <% projetos.forEach(p=> { %>
+            <div class="projeto">
+                <h3>
+                    <%= p.nome %> (<%= p.categoria %>)
+                </h3>
+                <p>
+                    <%= p.descricao %>
+                </p>
+                <% if (p.tecnologias.length) { %>
+                    <p>Tecnologias: <%= p.tecnologias.join(', ') %></p>
+                <% } %>
+                <p>Status: <%= p.status %></p>
+                <p><a href="<%= p.repositorio %>" target="_blank">Repositório</a></p>
+            </div>
+        <% }); %>
+    </section>
+
+    <!-- Botões de ação: PROJETOS -->
+    <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
+        <button type="button" onclick="addProj()">Adicionar Projeto</button>
+        <button type="button" onclick="editProj()">Editar Projeto</button>
+        <button type="button" onclick="exProj()">Excluir Projeto</button>
+    </div>
+
+    <div id="formulario-projetos"></div>
+</body>
+<script>
+    window.sobre = <%- JSON.stringify(sobre) %>;
+    window.habilidades = <%- JSON.stringify(habilidades) %>;
+    window.certificados = <%- JSON.stringify(certificados)  %>;
+    window.projetos = <%- JSON.stringify(projetos) %>;
+</script>
+</html>
