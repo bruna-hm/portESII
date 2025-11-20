@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <!-- Seção Sobre -->
     <section id="sobre" class="text-align:center">
         <img src="<%= sobre.foto %>" alt="Foto de <%= sobre.nome %>" class="perfil">
         <h1>
@@ -37,7 +36,6 @@
         </p>
     </section>
 
-    <!-- Botões de ação: SOBRE -->
     <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
         <form action="/form/sobre/editar" method="get" style="display:inline-block; margin: 0 1rem;">
             <button type="button" onclick="editSobre()">Editar Sobre</button>
@@ -45,7 +43,6 @@
         <div id="formulario-sobre"></div>
     </div>
 
-    <!-- Formação Acadêmica -->
     <section id="formacao">
         <h2>Formação Acadêmica</h2>
         <p>
@@ -53,20 +50,18 @@
         </p>
     </section>
 
-    <!-- Habilidades -->
     <section id="habilidades">
         <h2>Habilidades</h2>
         <ul>
             <% habilidades.forEach(h=> { %>
                 <% const valor=Object.values(h)[0]; %>
                     <li>
-                        <%= valor %>
+                        <%= h.h %>
                     </li>
                     <% }); %>
         </ul>
     </section>
     
-    <!-- Botões de ação: HABILIDADES -->
     <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
         <button type="button" onclick="addHab()">Adicionar Habilidade</button>
         <button type="button" onclick="editHab()">Editar Habilidade</button>
@@ -75,7 +70,6 @@
 
     <div id="formulario-habilidades"></div>
 
-    <!-- Certificados -->
     <section id="certificados">
         <h2>Certificados</h2>
         <ul>
@@ -89,7 +83,6 @@
         </ul>
     </section>
 
-    <!-- Botões de ação: CERTIFICADOS -->
     <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
         <button type="button" onclick="addCert()">Adicionar Certificado</button>
         <button type="button" onclick="editCert()">Editar Certificado</button>
@@ -98,7 +91,6 @@
 
     <div id="formulario-certificados"></div>
 
-    <!-- Projetos -->
     <section id="projetos">
         <h2>Projetos Desenvolvidos</h2>
         <% projetos.forEach(p=> { %>
@@ -118,7 +110,6 @@
         <% }); %>
     </section>
 
-    <!-- Botões de ação: PROJETOS -->
     <div class="botoes-acoes" style="margin: 2rem 0; text-align: center;">
         <button type="button" onclick="addProj()">Adicionar Projeto</button>
         <button type="button" onclick="editProj()">Editar Projeto</button>

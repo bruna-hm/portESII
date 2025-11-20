@@ -61,33 +61,34 @@ window.editSobre = function () {
     const btnSave = document.createElement('button');
     btnSave.type = 'button';
     btnSave.textContent = 'Salvar';
-    btnSave.onclick = () => {
-        const formData = new URLSearchParams();
-        formData.append('nome', form.querySelector('input[name="nome"]').value);
-        formData.append('profissao', form.querySelector('input[name="profissao"]').value);
-        formData.append('formacao', form.querySelector('input[name="formacao"]').value);
-        formData.append('email', form.querySelector('input[name="email"]').value);
-        formData.append('descricao', form.querySelector('textarea[name="descricao"]').value);
 
-        fetch('/form/sobre/salvar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formData.toString()
-        }).then(() => {
-            window.sobre.nome = formData.get('nome');
-            window.sobre.profissao = formData.get('profissao');
-            window.sobre.formacao = formData.get('formacao');
-            window.sobre.email = formData.get('email');
-            window.sobre.descricao = formData.get('descricao');
+    btnSave.onclick = async () => {
 
-            document.querySelector('h1').textContent = window.sobre.nome;
-            document.querySelector('h2').textContent = window.sobre.profissao;
-            document.querySelector('#descricao_style').textContent = window.sobre.descricao;
-            document.querySelector('p a[href^="mailto:"]').textContent = window.sobre.email;
-            document.querySelector('p a[href^="mailto:"]').href = `mailto:${window.sobre.email}`;
+        const data = {
+            nome: form.querySelector('input[name="nome"]').value,
+            profissao: form.querySelector('input[name="profissao"]').value,
+            formacao: form.querySelector('input[name="formacao"]').value,
+            email: form.querySelector('input[name="email"]').value,
+            descricao: form.querySelector('textarea[name="descricao"]').value
+        };
 
-            container.innerHTML = '';
+        await fetch('/form/sobre/salvar', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         });
+
+        window.sobre = data;
+
+        document.querySelector('h1').textContent = data.nome;
+        document.querySelector('h2').textContent = data.profissao;
+        document.querySelector('#descricao_style').textContent = data.descricao;
+
+        const emailA = document.querySelector('p a[href^="mailto:"]');
+        emailA.textContent = data.email;
+        emailA.href = `mailto:${data.email}`;
+
+        container.innerHTML = '';
     };
 
     wrapper.appendChild(btnCancel);
